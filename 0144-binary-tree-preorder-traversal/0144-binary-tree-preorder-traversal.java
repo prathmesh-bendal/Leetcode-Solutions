@@ -13,30 +13,55 @@
  *     }
  * }
  */
-class Solution {
+class Pair{
+    int count;
+    TreeNode node;
     
-    void preorder(TreeNode root,List<Integer> ans)
+    Pair(TreeNode node,int count)
     {
-        if(root==null)
-            return;
-        
-        
-        ans.add(root.val);
-        preorder(root.left,ans);
-        preorder(root.right,ans);
+        this.node=node;
+        this.count=count;
     }
+}
+class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         
-        List<Integer> ans=new ArrayList<Integer>();
         
+        List<Integer> ans=new ArrayList<>();
         if(root==null)
             return ans;
         
+        Stack<Pair> s=new Stack<>();
         
-        preorder(root,ans);
+        s.push(new Pair(root,1));
         
+        while(!s.empty())
+        {
+            Pair p=s.pop();
+            if(p.count==1)
+            {
+                ans.add(p.node.val);
+                p.count++;
+                s.push(p);
+                if(p.node.left!=null)
+                {
+                    s.push(new Pair(p.node.left,1));
+                }
+            }
+            else if(p.count==2)
+            {
+                p.count++;
+                s.push(p);
+                if(p.node.right!=null)
+                {
+                    s.push(new Pair(p.node.right,1));
+                }
+            }
+            else
+            {
+                
+            }
+        }
         return ans;
-        
-        
     }
 }
