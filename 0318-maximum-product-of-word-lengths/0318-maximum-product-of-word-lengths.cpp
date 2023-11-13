@@ -1,14 +1,6 @@
 class Solution {
 public:
-    bool compare(string &s,string &t)
-    {
-        for(int i=0;i<26;i++)
-        {
-            if(s[i]=='1' && t[i]=='1')
-                return false;
-        }
-        return true;
-    }
+    
     int maxProduct(vector<string>& words) {
         
         string t="";
@@ -16,7 +8,7 @@ public:
         {
             t+="0";
         }
-        vector<string> mp(words.size());
+        vector<int> mp(words.size());
         for(int i=0;i<words.size();i++)
         {
             string s=words[i];
@@ -26,7 +18,12 @@ public:
             {
                 temp[s[j]-'a']='1';
             }
-            mp[i]=temp;
+            int num=0;
+            for(int j=0;j<26;j++)
+            {
+                num=num*2+(temp[j]-'0');
+            }
+            mp[i]=num;
             
         }
         
@@ -39,7 +36,7 @@ public:
             {
                 string y=words[j];
                 int l2=y.length();
-                if(compare(mp[i],mp[j]))
+                if((mp[i]^mp[j])==(mp[i]+mp[j]))
                 {
                     ans=max(ans,l1*l2);
                 }
