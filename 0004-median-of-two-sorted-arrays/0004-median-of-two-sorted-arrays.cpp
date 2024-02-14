@@ -9,52 +9,47 @@ public:
             return findMedianSortedArrays(nums2,nums1);
         
         
-        int l=0,r=n;
+        int left=0,right=n;
         
-        while(l<=r)
+        while(left<=right)
         {
-            int n1=(l+r)/2;
-            int n2=(n+m+1)/2-n1;
+            int cut1=(left+right)/2;
+            int cut2=(n+m)/2-cut1;
             
-            int l1=INT_MIN,r1=INT_MIN;
-            int l2=INT_MAX,r2=INT_MAX;
+            int l1=INT_MIN,l2=INT_MIN;
+            int r1=INT_MAX,r2=INT_MAX;
             
-            if(n1-1>=0)
-                l1=nums1[n1-1];
-            if(n2-1>=0)
-                r1=nums2[n2-1];
+            if(cut1-1>=0)
+                l1=nums1[cut1-1];
             
-            if(n1<n)
-                l2=nums1[n1];
+            if(cut2-1>=0)
+                l2=nums2[cut2-1];
             
-            if(n2<m)
-                r2=nums2[n2];
+            if(cut1<n)
+                r1=nums1[cut1];
             
-            if(l1<=r2 && r1<=l2)
+            if(cut2<m)
+                r2=nums2[cut2];
+            
+            if(l1<=r2 && l2<=r1)
             {
-                if((n+m)%2==0)
-                {
-                    int lmax=max(l1,r1);
-                    int rmin=min(l2,r2);
-                    
-                    return (lmax+rmin)/2.0000000;
-                }
-                else
-                {
-                    return max(l1,r1)*1.0000;
-                }
+                int lc=max(l1,l2);
+                int rc=min(r1,r2);
+                
+                if((n+m)%2==1)
+                    return rc;
+                
+                return (lc+rc)/2.0000;
             }
-            
-            if(l1>r2)
+            else if(l1>r2)
             {
-                r=n1-1;
+                right=cut1-1;
             }
-            if(r1>l2)
+            else if(l2>r1)
             {
-                l=n1+1;
+                left=cut1+1;
             }
         }
-        
-        return -1.0000;
+        return -1;
     }
 };
